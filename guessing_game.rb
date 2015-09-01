@@ -50,6 +50,7 @@ def keep_playing
   puts "#########################################"
   puts "#  Would you like to play again? (y/n)  #"
   puts "#########################################"
+  puts
   gets.chomp == "y" ? (true) : (false)
 end
 
@@ -84,7 +85,8 @@ while continue
   puts
 
   #Initialize new game
-  answer = rand(1..100)
+  number_pool = (1..100).to_a.shuffle
+  answer = number_pool[6]
   correct = false
   warnings = 0
   num_guess = 0
