@@ -86,7 +86,7 @@ while continue
 
   #Initialize new game
   number_pool = (1..100).to_a.shuffle
-  answer = number_pool[6]
+  answer = number_pool[6] #6 Chosen by fair dice roll. Guaranteed to be random.
   correct = false
   warnings = 0
   num_guess = 0
