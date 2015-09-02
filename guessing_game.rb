@@ -45,24 +45,30 @@ def warn_player(warnings)
     terminate("I asked nicely. Now you're done.")
   end
 end
+def draw_box(message)
+  width = message.length + 6
+  puts "#" * width
+  message = message.prepend "#  "
+  message += "  #"
+  puts message
+  puts "#" * width
+end
 
 def keep_playing
-  puts "#########################################"
-  puts "#  Would you like to play again? (y/n)  #"
-  puts "#########################################"
-  puts
+  draw_box("Would you like to play again? (y/n)")
   gets.chomp == "y" ? (true) : (false)
 end
 
 def stupid_guess(guess, answer, previous_guesses)
   return true if guess > 100 || guess < 1
+  return true if previous_guesses.include?(guess)
   count = 0
   while (count < previous_guesses.size)
     old_answer = previous_guesses[count]
     if guess < answer
       return true if guess < old_answer && old_answer < answer
     elsif guess > answer
-      return true if guess > old_answer && old_answer > answer
+      return true if guess >  old_answer && old_answer > answer
     end
     count +=1
   end
@@ -104,9 +110,9 @@ while continue
       guess = guess.to_i
       correct = check_guess(guess, answer)
       break if correct
-      previous_guesses.push(guess)
       puts "Really? You already know that's not the answer." if stupid_guess(guess, answer, previous_guesses)
       puts
+      previous_guesses.push(guess)
     else
       #Warn, and eventually terminate for non-numbers
       warn_player(warnings)
@@ -118,13 +124,9 @@ while continue
   puts `clear`
   if correct
     suffix = "es" if num_guess > 1
-    puts "############################################################"
-    puts "#   Congratulations! You guessed correctly in #{num_guess} guess#{suffix}.   #"
-    puts "############################################################"
+    draw_box("Congratulations! You guessed correctly in #{num_guess} guess#{suffix}.")
   else
-    puts "###########################################################################"
-    puts "#  Sorry, you did not guess the right number. The correct number was #{answer}.  #"
-    puts "###########################################################################"
+    draw_box("Sorry, you did not guess the right number. The correct number was #{answer}.")
   end
   puts
   puts
