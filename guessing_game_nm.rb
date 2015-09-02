@@ -18,6 +18,11 @@ def lie_detector(min_guess, max_guess)
   true
 end
 
+def variance(min_guess, max_guess)
+  range = max_guess - min_guess
+  (0..range).to_a.sample / 2 * (-1..1).to_a.sample
+end
+
 continue = true
 #New game loop
 while continue
@@ -56,6 +61,7 @@ while continue
     num_guess += 1 if valid_input
     valid_input = true
     guess = min_guess + (max_guess - min_guess)/2
+    guess += variance(min_guess, max_guess)
     puts
     puts "I guess #{guess}"
     print "$: "
